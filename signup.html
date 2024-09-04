@@ -15,7 +15,7 @@
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 	<!-- Site Title -->
-	<title>Karma Shop</title>
+	<title>Karma Shop - log in or sign up</title>
 
 	<!--
 		CSS
@@ -126,36 +126,39 @@
 					<div class="login_box_img">
 						<img class="img-fluid" src="img/login.jpg" alt="">
 						<div class="hover">
-							<h4>do you have an account?</h4>
-							<p>welcome to our web site</p>
-							<a class="primary-btn" href="registration.html">Login</a>
+							<h4>Do you have an account?</h4>
+							<p>Welcome to our market place</p>
+							<a class="primary-btn" href="login.html">LOGIN</a>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-6">
 					<div class="login_form_inner">
-						<h3>SIGNUP</h3>
+						<h3>SIGN UP</h3>
 						<div class="row login_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control"  placeholder="First Name" id="fisrtName" >
+								<input type="text" class="form-control" id="firstName"  placeholder="First Name" >
 							</div>
                             <div class="col-md-12 form-group">
-								<input type="text" class="form-control"  placeholder="Last Name" id="lastName" >
+								<input type="text" class="form-control" id="lastName"  placeholder="Last Name" >
 							</div>
                             <div class="col-md-12 form-group">
-								<input type="email" class="form-control"  placeholder="Email" id="email" >
+								<input type="email" class="form-control" id="email"  placeholder="Email" >
 							</div>
+                            <div class="col-md-12 form-group">
+								<input type="password" class="form-control" id="password"  placeholder="Password" >
+							</div>
+                            <div class="col-md-12 form-group">
+								<input type="password" class="form-control" id="confirmPassword"  placeholder="Confirm Password" >
+							</div>
+                            <div class="col-md-12 form-group">
+								<input type="tel" class="form-control" id="tel"  placeholder="Telephone" >
+							</div>
+							
+							
 							<div class="col-md-12 form-group">
-								<input type="password" class="form-control"  placeholder="Password" id="password">
-							</div>
-                            <div class="col-md-12 form-group">
-								<input type="password" class="form-control"  placeholder="Confirm Password" id="confirmPassword" >
-							</div>
-                            <div class="col-md-12 form-group">
-								<input type="tel" class="form-control"  placeholder="Tel" id="tel">
-							</div>
-							<div class="col-md-12 form-group">
-								<button type="submit" value="submit" class="primary-btn" onclick="signup()">SINGUP</button>
+								<button type="submit" value="submit" class="primary-btn" onclick="signUp()">SIGNUP</button>
+								
 							</div>
 						</div>
 					</div>
@@ -236,10 +239,7 @@
 				</div>
 			</div>
 			<div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
-				<p class="footer-text m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-</p>
+	
 			</div>
 		</div>
 	</footer>
