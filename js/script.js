@@ -14,7 +14,7 @@ function signUp(){
     email:email,
     psw:psw,
     cPsw:cPsw,
-    tel:tel
+    tel:tel 
 };
 //Save into LS
 var usersTab=JSON.parse(localStorage.getItem("users") || "[]");
