@@ -38,7 +38,7 @@
 		<div class="main_menu">
 			<nav class="navbar navbar-expand-lg navbar-light main_box">
 				<div class="container">
-					<!-- Brand and toggle get grouped for better mobile display  -->
+					<!-- Brand and toggle get grouped for better mobile display -->
 					<a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,19 +130,25 @@
 							<div class="col-md-12 form-group">
 								<input type="text" class="form-control" id="nameProduct"  placeholder=" Name Product" >
 							</div>
+							<span id="NameProductError" style="color:red"></span>
                             <div class="col-md-12 form-group">
 								<input type="number" class="form-control" id="price"  placeholder="Price " >
 							</div>
+							<span id="priceError" style="color:red"></span>
+
                             <div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="stock"  placeholder="Stock" >
+								<input type="number" class="form-control" id="stock"  placeholder="Stock" >
 							</div>
+							<span id="stockError" style="color:red"></span>
                     
 							<div class="col-md-12 form-group">
-								
+								<!-- <p style="text-align: left;">Category </p> -->
 								<select name="Category" id="category" placeholder="Category">
 									<option value="">Category</option>
 									<option value="tel">TEL</option>
 									<option value="pc">PC</option>
+									<option value="tablette">Tablette</option>
+									<option value="tv">TV</option>
 
 								</select>
 							</div>
