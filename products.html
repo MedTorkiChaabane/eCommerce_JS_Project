@@ -15,20 +15,22 @@
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 	<!-- Site Title -->
-	<title>Karma Shop - log in or sign up</title>
-
+	<title>Karma Shop - home</title>
 	<!--
-	CSS
+		CSS
 		============================================= -->
 	<link rel="stylesheet" href="css/linearicons.css">
-	<link rel="stylesheet" href="css/owl.carousel.css">
-	<link rel="stylesheet" href="css/themify-icons.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/themify-icons.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/owl.carousel.css">
 	<link rel="stylesheet" href="css/nice-select.css">
 	<link rel="stylesheet" href="css/nouislider.min.css">
-	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/ion.rangeSlider.css" />
+	<link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css" />
+	<link rel="stylesheet" href="css/magnific-popup.css">
 	<link rel="stylesheet" href="css/main.css">
-    <script src="js/script.js"></script>
+	<script src="js/script.js"></script>
 </head>
 
 <body>
@@ -49,7 +51,7 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 						<ul class="nav navbar-nav menu_nav ml-auto">
-							<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+							<li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
 							<li class="nav-item submenu dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 								 aria-expanded="false">Shop</a>
@@ -69,11 +71,11 @@
 									<li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
 								</ul>
 							</li>
-							<li class="nav-item submenu dropdown active">
+							<li class="nav-item submenu dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 								 aria-expanded="false">Pages</a>
 								<ul class="dropdown-menu">
-									<li class="nav-item active"><a class="nav-link" href="login.html">Login</a></li>
+									<li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
 									<li class="nav-item"><a class="nav-link" href="tracking.html">Tracking</a></li>
 									<li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
 								</ul>
@@ -102,81 +104,42 @@
 	</header>
 	<!-- End Header Area -->
 
-	<!-- Start Banner Area -->
-	<section class="banner-area organic-breadcrumb">
-		<div class="container">
-			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-				<div class="col-first">
-					<h1>Login/Register</h1>
-					<nav class="d-flex align-items-center">
-						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-						<a href="category.html">Login/Register</a>
-					</nav>
+	
+
+	
+
+
+	<!-- start product Area -->
+	<section class="">
+		<!-- single product slide -->
+		
+			<div class="container" style="margin-top:15%">
+				<div class="row" id="productDiv">
+					<script>
+						displayProducts();
+					</script>
+					<!-- single product -->
+</div>
 				</div>
 			</div>
-		</div>
+			
+		
+		<!-- single product slide -->
 	</section>
-	<!-- End Banner Area -->
+	
+	<!-- end product Area -->
 
-	<!--================Login Box Area =================-->
-	<section class="login_box_area section_gap">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="login_box_img">
-						<img class="img-fluid" src="img/login.jpg" alt="">
-						<div class="hover">
-							<h4>Do you have an account?</h4>
-							<p>Welcome to our market place</p>
-							<a class="primary-btn" href="login.html">LOGIN</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="login_form_inner">
-						<h3>SIGN UP</h3>
-						<div class="row login_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
-							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="firstName"  placeholder="First Name" >
-							</div>
-							<span id="fNameError" style="color:red"></span>
+	<!-- Start exclusive deal Area -->
+	
+	<!-- End exclusive deal Area -->
 
-                            <div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="lastName"  placeholder="Last Name" >
-							</div>
-							<span id="fNameError1" style="color:red"></span>
+	<!-- Start brand Area -->
 
-                            <div class="col-md-12 form-group">
-								<input type="email" class="form-control" id="email"  placeholder="Email" >
-							</div>
-							<span id="emailError" style="color:red"></span>
+	<!-- End brand Area -->
 
-                            <div class="col-md-12 form-group">
-								<input type="password" class="form-control" id="password"  placeholder="Password" >
-							</div>
-							<span id="PswError" style="color:red"></span>
-
-                            <div class="col-md-12 form-group">
-								<input type="password" class="form-control" id="confirmPassword"  placeholder="Confirm Password" >
-							</div>
-							<span id="cPswError1"></span>
-                            <div class="col-md-12 form-group">
-								<input type="number" class="form-control" id="tel"  placeholder="Telephone" >
-							</div>
-							<span id="telError" style="color:red"></span>
-							
-							
-							<div class="col-md-12 form-group">
-								<button type="submit" value="submit" class="primary-btn" onclick="signUp()">SIGNUP</button>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!--================End Login Box Area =================-->
+	<!-- Start related-product Area -->
+	
+	<!-- End related-product Area -->
 
 	<!-- start footer Area -->
 	<footer class="footer-area section_gap">
@@ -212,8 +175,8 @@
 									</div>
 
 									<!-- <div class="col-lg-4 col-md-4">
-													<button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
-												</div>  -->
+												<button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
+											</div>  -->
 								</div>
 								<div class="info"></div>
 							</form>
@@ -249,12 +212,14 @@
 				</div>
 			</div>
 			<div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
-	
+				<p class="footer-text m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+</p>
 			</div>
 		</div>
 	</footer>
 	<!-- End footer Area -->
-
 
 	<script src="js/vendor/jquery-2.2.4.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
@@ -264,6 +229,7 @@
 	<script src="js/jquery.nice-select.min.js"></script>
 	<script src="js/jquery.sticky.js"></script>
 	<script src="js/nouislider.min.js"></script>
+	<script src="js/countdown.js"></script>
 	<script src="js/jquery.magnific-popup.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<!--gmaps Js-->

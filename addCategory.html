@@ -15,10 +15,10 @@
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 	<!-- Site Title -->
-	<title>Karma Shop - log in or sign up</title>
+	<title>Karma Shop - add category</title>
 
 	<!--
-	CSS
+		CSS
 		============================================= -->
 	<link rel="stylesheet" href="css/linearicons.css">
 	<link rel="stylesheet" href="css/owl.carousel.css">
@@ -107,10 +107,10 @@
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
-					<h1>Login/Register</h1>
+					<h1>Add Category</h1>
 					<nav class="d-flex align-items-center">
 						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-						<a href="category.html">Login/Register</a>
+						<a href="category.html">Add Category</a>
 					</nav>
 				</div>
 			</div>
@@ -122,52 +122,19 @@
 	<section class="login_box_area section_gap">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-6">
-					<div class="login_box_img">
-						<img class="img-fluid" src="img/login.jpg" alt="">
-						<div class="hover">
-							<h4>Do you have an account?</h4>
-							<p>Welcome to our market place</p>
-							<a class="primary-btn" href="login.html">LOGIN</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
+				
+				<div class="col-lg-12" >
 					<div class="login_form_inner">
-						<h3>SIGN UP</h3>
+						<h3>Add Category</h3>
 						<div class="row login_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="firstName"  placeholder="First Name" >
+								<input type="text" class="form-control" id="nameCategory"  placeholder=" Catgory Name" >
 							</div>
-							<span id="fNameError" style="color:red"></span>
-
-                            <div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="lastName"  placeholder="Last Name" >
-							</div>
-							<span id="fNameError1" style="color:red"></span>
-
-                            <div class="col-md-12 form-group">
-								<input type="email" class="form-control" id="email"  placeholder="Email" >
-							</div>
-							<span id="emailError" style="color:red"></span>
-
-                            <div class="col-md-12 form-group">
-								<input type="password" class="form-control" id="password"  placeholder="Password" >
-							</div>
-							<span id="PswError" style="color:red"></span>
-
-                            <div class="col-md-12 form-group">
-								<input type="password" class="form-control" id="confirmPassword"  placeholder="Confirm Password" >
-							</div>
-							<span id="cPswError1"></span>
-                            <div class="col-md-12 form-group">
-								<input type="number" class="form-control" id="tel"  placeholder="Telephone" >
-							</div>
-							<span id="telError" style="color:red"></span>
-							
+							<span id="NameCategoryError" style="color:red"></span>
+                    
 							
 							<div class="col-md-12 form-group">
-								<button type="submit" value="submit" class="primary-btn" onclick="signUp()">SIGNUP</button>
+								<button type="submit" value="submit" class="primary-btn" onclick="addCategory()">ADD</button>
 								
 							</div>
 						</div>
