@@ -118,7 +118,7 @@ function generateId(T){
   return max;
 }
 
-function checkEmail(ch){
+  function checkEmail(ch){
     var usersTab=JSON.parse(localStorage.getItem('users') || "[]");
     var findedUser=null;
     
@@ -210,8 +210,8 @@ function login(){
     }
     
     if(findedUser){ //si findedUser différent de nulle cad exist on récupére l'id et on passe à la page index.html.
-        //Très important  localStorage.setItem('conncetedUserId', findedUser.id);
-        localStorage.setItem('conncetedUserId', findedUser.id); //Récuperer l'id user pour créer une session.
+        //Très important  localStorage.setItem('connectedUserId', findedUser.id);
+        localStorage.setItem('connectedUserId', findedUser.id); //Récuperer l'id user pour créer une session.
         location.replace("index.html"); //page index.html s'ouvre si l'email et psw exist dand usersTab.
 
     }
@@ -236,7 +236,7 @@ function addCategory(){
     //Validation
     if(isNCategoryValid){  //if all condition are valid create object and save into DB.
   
-        var categoriesTab=JSON.parse(localStorage.getItem("categories") || "[]");
+        var categoriesTab=JSON.parse(localStorage.getItem('categories') || '[]');
         //création de l'objet product
         var category = {
         id:generateId(categoriesTab)+1,
@@ -255,10 +255,11 @@ function displayProducts(){
     var productsTab=JSON.parse(localStorage.getItem('products') || '[]');
     var content='';
     for (var i=0; i<productsTab.length;i++){
+        //utilisation des backtrick `` (retour à la ligne , utilisation des variables)
         content=content+`
      <div class="col-lg-3 col-md-6">
         <div class="single-product">
-            <img class="img-fluid" src="img/product/p1.jpg" alt="">
+            <img class="img-fluid" src="img/product/p${i+1}.jpg" alt="">
             <div class="product-details">
                 <h6>${productsTab[i].nameProduct} </h6>
                 <div class="price">
@@ -283,7 +284,11 @@ function displayProducts(){
                         <span class="lnr lnr-move"></span>
                         <p class="hover-text">view more</p>
                     </a>
-                </div>
+                  
+                </div> 
+                
+                <button class="btn btn-warning" onClick="goToDisplayProduct(${productsTab[i].id})"> Display </button>
+
             </div>
         </div>
     </div>
@@ -292,4 +297,99 @@ function displayProducts(){
 
     }
     document.getElementById('productDiv').innerHTML=content;
+}
+
+//function pour passer  passe à une nouvelle page html pour voir les details d'un produit et enregistrer l'id product.
+function goToDisplayProduct(id){
+    localStorage.setItem('displayedProductId',id)
+    
+    location.replace('productDetails.html');
+}
+
+//fonction qui affiche d'une façon dynamique les détails du produits sélectionné.
+function displayProductDetails(){
+    var id=JSON.parse(localStorage.getItem('displayedProductId') );
+    var productsTab=JSON.parse(localStorage.getItem('products') || '[]');
+    var displayedProduct=null;
+    //on recherche l'id dans le tableau productsTab
+    for(var i=0; i<productsTab.length; i++){
+        if(productsTab[i].id==id){
+            displayedProduct=productsTab[i];
+            break;
+        }
+    }
+    document.getElementById("nameProductDiv").innerHTML=displayedProduct.nameProduct;
+    document.getElementById("priceDiv").innerHTML=displayedProduct.price;
+    document.getElementById("categoryDiv").innerHTML=displayedProduct.category;
+    if(displayedProduct.stock>0){
+    document.getElementById("stockDiv").innerHTML="In Stock";
+    document.getElementById("stockDiv").innerHTML.style.color='green'; //don't work
+    }
+    else {
+        document.getElementById("stockDiv").innerHTML="Out of Stock";
+        document.getElementById("stockDiv").innerHTML.style.color='red'; //don't work
+    }
+
+}
+
+
+//fonction qui ajoute une commande d'un produit sélectionné dans le panier
+function addToBasket(){
+    //récupérer la quantité de produits à commander donné par l'utlisateur.
+    var qty=document.getElementById('qty').value;
+    var userId=localStorage.getItem('connectedUserId'); 
+    var productId=localStorage.getItem('displayedProductId');
+    
+    var ordersTab=JSON.parse(localStorage.getItem('orders') || '[]');
+    //Creation d'objet
+    var order={
+        id:generateId(ordersTab)+1,
+        userId:userId,
+        productId:productId,
+        qty:qty
+    }
+    //Save into LS
+    ordersTab.push(order);
+    localStorage.setItem('orders', JSON.stringify(ordersTab));
+    location.replace("basket.html");
+ 
+}
+
+function displayOrders(){
+    var ordersTab=JSON.parse(localStorage.getItem('orders')||'[]');
+    var content='';
+    for(var i=0; i<ordersTab.length;i++){
+        content=content+`
+        <tr>
+        <td>
+          ${ordersTab[i].id}
+        </td>
+        <td>
+            ${searchObj(ordersTab[i].userId,"users").fName}
+        </td>
+        <td>
+          ${searchObj(ordersTab[i].productId,"products").nameProduct}
+        </td>
+        <td>
+          ${searchObj(ordersTab[i].productId,"products").price}
+        </td>
+        <td>
+           ${ordersTab[i].qty}
+        </td>
+    </tr>`;
+    }
+    document.getElementById("orderDiv").innerHTML=content;
+}
+// a completer searchUser() et searchProduct()
+function searchObj(id,key){
+    var T=JSON.parse(localStorage.getItem(key) || '[]');
+    var findedOb;
+    for(var i=0; i<T.length;i++){
+        if(T[i].id==id){
+            findedOb=T[i];
+            break;
+        }
+
+    }
+    return findedOb;
 }
