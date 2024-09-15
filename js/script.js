@@ -5,51 +5,31 @@ function signUp(){
     //récuperation des données
     var fName=document.getElementById("firstName").value;
     var isNameValid=checklength(fName,3);
-    if(isNameValid==false){
-        document.getElementById('fNameError').innerHTML="First Name should be at least 4 caracters!";
-    }
-    else {
-        document.getElementById('fNameError').innerHTML="";
-    }
+    errorMessage(isNameValid,'fNameError',"First Name should be at least 4 caracters!");
     /********************************************************************* */
     var lName=document.getElementById("lastName").value;
     var islNameValid=checklength(lName,4);
     if(!islNameValid){
-        document.getElementById('fNameError1').innerHTML="Last Name should be at least 4 caracters!";
+        document.getElementById('lNameError').innerHTML="Last Name should be at least 4 caracters!";
     }
     else {
-        document.getElementById('fNameError1').innerHTML="";
+        document.getElementById('lNameError').innerHTML="";
     }
     
     /********************************************************************* */
     var email=document.getElementById("email").value;
     var findedMail= checkEmail(email);
-    if(findedMail){ 
-     
-        document.getElementById('emailError').innerHTML="Eamil déja utiliser !";
-    }
-    else {
-        document.getElementById('emailError').innerHTML="";
-    }
+    errorMessage(!findedMail,'emailError',"Email already used");
+   
     /********************************************************************* */
     var psw=document.getElementById("password").value;
     var isPswValid=checklength(psw,6);
-    if(!isPswValid){
-        document.getElementById('PswError').innerHTML="Password should be at least 6 caracters!";
-    }
-    else {
-        document.getElementById('PswError').innerHTML="";
-    }
+    errorMessage(isPswValid,'PswError',"Password should be at least 6 caracters!");
     
     /********************************************************************* */
     var cPsw=document.getElementById("confirmPassword").value;
     var isConfirmPsw=isEqual(psw,cPsw);
-    if(!isConfirmPsw){
-        document.getElementById('cPswError1').innerHTML="Passwords doesn't match";
-    }
-    else {
-        document.getElementById('cPswError1').innerHTML="";
-    }
+    errorMessage(isConfirmPsw,'cPswError',"Passwords doesn't match");
     
     /********************************************************************* */
     var tel=document.getElementById("tel").value;
@@ -135,6 +115,15 @@ function generateId(T){
 
 }
 
+function errorMessage(valid,id,msg){
+    if(!valid){
+        document.getElementById(id).innerHTML=msg;
+    }
+    else {
+        document.getElementById(id).innerHTML="";
+    }
+
+}
 //function to add  product
 function addProduct(){
     //récuperation des données
@@ -323,11 +312,11 @@ function displayProductDetails(){
     document.getElementById("categoryDiv").innerHTML=displayedProduct.category;
     if(displayedProduct.stock>0){
     document.getElementById("stockDiv").innerHTML="In Stock";
-    document.getElementById("stockDiv").innerHTML.style.color='green'; //don't work
+    document.getElementById("stockDiv").style.color="#39FF14"; 
     }
     else {
         document.getElementById("stockDiv").innerHTML="Out of Stock";
-        document.getElementById("stockDiv").innerHTML.style.color='red'; //don't work
+        document.getElementById("stockDiv").style.color="red"; 
     }
 
 }
@@ -339,7 +328,9 @@ function addToBasket(){
     var qty=document.getElementById('qty').value;
     var userId=localStorage.getItem('connectedUserId'); 
     var productId=localStorage.getItem('displayedProductId');
-    
+    //condition sur la quantité saisie
+    var product=searchObj(productId, 'products');
+    if(Number(qty)>0 && Number(qty) <= product.stock){
     var ordersTab=JSON.parse(localStorage.getItem('orders') || '[]');
     //Creation d'objet
     var order={
@@ -351,21 +342,40 @@ function addToBasket(){
     //Save into LS
     ordersTab.push(order);
     localStorage.setItem('orders', JSON.stringify(ordersTab));
+    updateStock(productId,Number(qty));
     location.replace("basket.html");
- 
+    }
+    else {
+     document.getElementById('qtyError').innerHTML="Unvalid quantity or stock unavailable";
+     document.getElementById('qtyError').style.color="red";
+    }
+}
+ //update stock after reservation
+function updateStock(id,qty){
+ var productsTab=JSON.parse(localStorage.getItem('products')||'[]');
+ for(var i=0; i<productsTab.length; i++){
+     if(productsTab[i].id==id){
+         productsTab[i].stock=productsTab[i].stock-qty;
+         break;
+     }
+ }
+ localStorage.setItem('products',JSON.stringify(productsTab));
 }
 
-function displayOrders(){
+//fonction pour l'Admin qui affiche les informations sur les orders.
+function displayAllOrders(){
     var ordersTab=JSON.parse(localStorage.getItem('orders')||'[]');
     var content='';
+    var totalSum=0;
     for(var i=0; i<ordersTab.length;i++){
+        totalSum=totalSum+ ordersTab[i].qty*searchObj(ordersTab[i].productId,"products").price;
         content=content+`
         <tr>
         <td>
           ${ordersTab[i].id}
         </td>
         <td>
-            ${searchObj(ordersTab[i].userId,"users").fName}
+          ${searchObj(ordersTab[i].userId,"users").fName}
         </td>
         <td>
           ${searchObj(ordersTab[i].productId,"products").nameProduct}
@@ -376,11 +386,43 @@ function displayOrders(){
         <td>
            ${ordersTab[i].qty}
         </td>
+        <td>
+        ${ordersTab[i].qty*searchObj(ordersTab[i].productId,"products").price}
+        </td>
+        
     </tr>`;
+   
     }
+    content=content+`Total Somme : ${totalSum}`;
     document.getElementById("orderDiv").innerHTML=content;
 }
+
 // a completer searchUser() et searchProduct()
+function searchUser(id){
+    var usersTab=JSON.parse(localStorage.getItem('users') || '[]');
+    var findedUser;
+    for(var i=0; i<usersTab.length;i++){
+        if(usersTab[i].id==id){
+            findedUser=usersTab[i];
+            break;
+        }
+
+    }
+    return findedUser;
+}
+
+function searchProduct(id){
+    var productsTab=JSON.parse(localStorage.getItem('products') || '[]');
+    var findedProduct;
+    for(var i=0; i<productsTab.length;i++){
+        if(productsTab[i].id==id){
+            findedProduct=productsTab[i];
+            break;
+        }
+    }
+    return findedProduct;
+}
+
 function searchObj(id,key){
     var T=JSON.parse(localStorage.getItem(key) || '[]');
     var findedOb;
@@ -393,3 +435,105 @@ function searchObj(id,key){
     }
     return findedOb;
 }
+
+//Fonction qui affiche un tableau contenant les commandes de l'utilisateur connecté (fonctionne)
+function displayMyOrders(){
+    var ordersTab=JSON.parse(localStorage.getItem('orders')||'[]');
+    var cUserId=localStorage.getItem('connectedUserId'); 
+    var content='';
+    var totalSum=0;
+    for(var i=0; i<ordersTab.length;i++){
+        
+        if(ordersTab[i].userId==cUserId){
+        totalSum=totalSum+ ordersTab[i].qty*searchObj(ordersTab[i].productId,"products").price;
+        content=content+`
+        <tr>
+        <td>
+          ${ordersTab[i].id}
+        </td>
+        <td>
+          ${searchObj(ordersTab[i].productId,"products").nameProduct}
+        </td>
+        <td>
+          ${searchObj(ordersTab[i].productId,"products").price}
+        </td>
+        <td>
+           ${ordersTab[i].qty}
+        </td>
+        <td>
+        ${ordersTab[i].qty*searchObj(ordersTab[i].productId,"products").price}
+        </td>
+        </td>
+        <td><button class="btn btn-danger" onclick="deleteOrder(${ordersTab[i].id})">Delete</button>
+        </td>
+        
+        
+    </tr>`;
+        }
+    }
+    content=content+`Total Somme : ${totalSum}`;
+    document.getElementById("orderDiv").innerHTML=content;
+}
+
+//Fonction qui affiche un tableau contenant les commandes de l'utilisateur connecté (fonctionne) //Correction
+function displayMyOrders2(){
+    var ordersTab=JSON.parse(localStorage.getItem('orders')||'[]');
+    var cUserId=localStorage.getItem('connectedUserId'); 
+    var content='';
+    var totalSum=0;
+    var myOrdersTab=[];
+    for(var i=0; i<ordersTab.length;i++){
+        
+        if(ordersTab[i].userId==cUserId){
+            myOrdersTab.push(ordersTab[i]);
+        }
+    }
+    for(var i=0; i<myOrdersTab.length;i++){
+        totalSum=totalSum+ myOrdersTab[i].qty*searchObj(myOrdersTab[i].productId,"products").price;
+        content=content+`
+        <tr>
+        <td>
+          ${myOrdersTab[i].id}
+        </td>
+        <td>
+          ${searchObj(myOrdersTab[i].productId,"products").nameProduct}
+        </td>
+        <td>
+          ${searchObj(myOrdersTab[i].productId,"products").price}
+        </td>
+        <td>
+           ${myOrdersTab[i].qty}
+        </td>
+        <td>
+        ${myOrdersTab[i].qty*searchObj(myOrdersTab[i].productId,"products").price}
+        </td>
+        <td><button class="btn btn-danger" onclick="deleteOrder(${myOrdersTab[i].id})">Delete</button>
+        </td>
+        
+    </tr>`;
+        }
+    
+    content=content+`<tr><td> Total Somme : </td><td></td><td></td><td></td><td>${totalSum}</td><td></td><tr>`;
+    document.getElementById("orderDiv").innerHTML=content;
+}
+function deleteOrder(id){
+    
+    var ordersTab=JSON.parse(localStorage.getItem('orders') || '[]');
+    var pos=searchOrderPositionById(id);
+    ordersTab.splice(pos,1);
+    localStorage.setItem('orders', JSON.stringify(ordersTab));
+    location.reload();
+}
+function searchOrderPositionById(id){
+    var position;
+    var ordersTab=JSON.parse(localStorage.getItem('orders') || '[]');
+    for(var i=0; i<ordersTab.length;i++){
+        if(ordersTab[i].id==id){
+            position=i;
+            break;
+        }
+    }
+    return position;
+}
+
+
