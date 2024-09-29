@@ -50,7 +50,8 @@ function signUp(){
     email:email,
     psw:psw,
     cPsw:cPsw,
-    tel:tel
+    tel:tel,
+    role:"client"
     };
 //Save into LS
 //console.log('here tab', usersTab);
@@ -58,9 +59,76 @@ function signUp(){
 //usersTab = [usersTab]; 
 usersTab.push(user);
 localStorage.setItem('users',JSON.stringify(usersTab));
+location.replace('login.html');
     }
 }
 /********************************************************************* */
+function signupStore(){
+    //récuperation des données
+    var fName=document.getElementById("firstNameStore").value;
+    var isNameValid=checklength(fName,3);
+    errorMessage(isNameValid,'fNameErrorStore',"First Name should be at least 4 caracters!");
+    /********************************************************************* */
+    var lName=document.getElementById("lastNameStore").value;
+    var islNameValid=checklength(lName,4);
+    if(!islNameValid){
+        document.getElementById('lNameErrorStore').innerHTML="Last Name should be at least 4 caracters!";
+    }
+    else {
+        document.getElementById('lNameErrorStore').innerHTML="";
+    }
+    
+    /********************************************************************* */
+    var email=document.getElementById("emailStore").value;
+    var findedMail= checkEmail(email);
+    errorMessage(!findedMail,'emailErrorStore',"Email already used");
+   
+    /********************************************************************* */
+    var psw=document.getElementById("passwordStore").value;
+    var isPswValid=checklength(psw,6);
+    errorMessage(isPswValid,'PswErrorStore',"Password should be at least 6 caracters!");
+    
+    /********************************************************************* */
+    var cPsw=document.getElementById("confirmPasswordStore").value;
+    var isConfirmPsw=isEqual(psw,cPsw);
+    errorMessage(isConfirmPsw,'cPswErrorStore',"Passwords doesn't match");
+    
+    /********************************************************************* */
+    var tel=document.getElementById("telStore").value;
+    var isTelValid=checkPhone(tel,8);
+    if(!isTelValid){
+        document.getElementById('telErrorStore').innerHTML="phone must have 8 numbers";
+    }
+    else {
+        document.getElementById('telErrorStore').innerHTML="";
+    }
+    var addressValue=document.getElementById("addressStore").value;
+    var storeNameValue=document.getElementById("storeName").value;
+    if(isNameValid && islNameValid && isPswValid && isConfirmPsw && isTelValid && !findedMail){
+   //create user object
+   var usersTab=JSON.parse(localStorage.getItem("users") || "[]");//declaration avant la creation de l'iobjet parce l'id demande usersTab
+   var user = {
+    id:generateId(usersTab)+1,
+    fName:fName, 
+    lName:lName,
+    email:email,
+    psw:psw,
+    cStorePsw:cPsw,
+    tel:tel,
+    address:addressValue,
+    storeName:storeNameValue,
+    role:"store",
+    status:"NOK"
+    };
+//Save into LS
+//console.log('here tab', usersTab);
+//if(!(usersTab instanceof Array))
+//usersTab = [usersTab]; 
+usersTab.push(user);
+localStorage.setItem('users',JSON.stringify(usersTab));
+location.replace('login.html');
+    }
+}
 /********************************************************************* */
 
 //function pour vérifier longuer d'une chaine
@@ -114,10 +182,14 @@ function generateId(T){
    
 
 }
+function getKey(key){
+return(JSON.parse(localStorage.getItem(key) || "[]"));
+}
 
 function errorMessage(valid,id,msg){
     if(!valid){
         document.getElementById(id).innerHTML=msg;
+        document.getElementById(id).style.color='red';
     }
     else {
         document.getElementById(id).innerHTML="";
@@ -198,11 +270,30 @@ function login(){
         
     }
     
-    if(findedUser){ //si findedUser différent de nulle cad exist on récupére l'id et on passe à la page index.html.
+    if(findedUser){ 
+        if(findedUser.role=="client"){ //user trouvé client
+            localStorage.setItem('connectedUserId', findedUser.id);
+            location.replace('index.html');
+        
+        }else if(findedUser.role=="store"){ //user trouvé store
+            if(findedUser.status=="NOK"){
+                document.getElementById("loginError").innerHTML="Account not yet verified";
+                document.getElementById("loginError").style.color="red";
+            }
+            else{
+            localStorage.setItem('connectedUserId', findedUser.id);
+            location.replace('addProduct.html');
+            }
+        }
+        else{
+            localStorage.setItem('connectedUserId', findedUser.id);
+            location.replace('admin.html');
+        }
+        /*si findedUser différent de nulle cad exist on récupére l'id et on passe à la page index.html.
         //Très important  localStorage.setItem('connectedUserId', findedUser.id);
         localStorage.setItem('connectedUserId', findedUser.id); //Récuperer l'id user pour créer une session.
         location.replace("index.html"); //page index.html s'ouvre si l'email et psw exist dand usersTab.
-
+         */
     }
     else {
         document.getElementById('loginError').innerHTML="Please check email or psw !";
@@ -474,7 +565,7 @@ function displayMyOrders(){
     content=content+`Total Somme : ${totalSum}`;
     document.getElementById("orderDiv").innerHTML=content;
 }
-
+ 
 //Fonction qui affiche un tableau contenant les commandes de l'utilisateur connecté (fonctionne) //Correction
 function displayMyOrders2(){
     var ordersTab=JSON.parse(localStorage.getItem('orders')||'[]');
@@ -508,6 +599,7 @@ function displayMyOrders2(){
         ${myOrdersTab[i].qty*searchObj(myOrdersTab[i].productId,"products").price}
         </td>
         <td><button class="btn btn-danger" onclick="deleteOrder(${myOrdersTab[i].id})">Delete</button>
+        
         </td>
         
     </tr>`;
@@ -516,6 +608,7 @@ function displayMyOrders2(){
     content=content+`<tr><td> Total Somme : </td><td></td><td></td><td></td><td>${totalSum}</td><td></td><tr>`;
     document.getElementById("orderDiv").innerHTML=content;
 }
+//fonction qui efface une ligne de commande selon l'id dans OrdersTab
 function deleteOrder(id){
     
     var ordersTab=JSON.parse(localStorage.getItem('orders') || '[]');
@@ -524,6 +617,7 @@ function deleteOrder(id){
     localStorage.setItem('orders', JSON.stringify(ordersTab));
     location.reload();
 }
+//rendre la position d'un élement dans un tableau selon son id
 function searchOrderPositionById(id){
     var position;
     var ordersTab=JSON.parse(localStorage.getItem('orders') || '[]');
@@ -536,4 +630,118 @@ function searchOrderPositionById(id){
     return position;
 }
 
+//fonction pour générer un header Dynamique
+function generateHeader(){
+    var connectedUserId=localStorage.getItem('connectedUserId');
+    var content='';
+    var connectedUserId= searchObj(connectedUserId,'users');
+    if(connectedUserId){
+        //user is connected
+        content=`
+        <li class="nav-item "><a class="nav-link" href="index.html">Home</a></li>
+		<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item "><a class="nav-link" href="products.html">Products</a></li>
+	    <li class="nav-item"><a class="nav-link" href="profile.html">Hello: ${connectedUserId.fName} ${connectedUserId.lName}</a></li>
+        <li class="nav-item "><a class="nav-link" href="basket.html">basket</a></li>
+        <li class="nav-item "><a class="nav-link" onclick="logout()">logout</a></li>`
+    }
+    else{
+        //user is not connected
+        content=`
+        <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+		<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
+	    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+        <li class="nav-item ">Are you a :<a class="nav-link" href="signup.html">Client</a> or a <a class="nav-link" href="signupStore.html">Store</a> ?</li>`
+		
+    }
+    document.getElementById('headerId').innerHTML=content;
+}
 
+//
+function logout(){
+localStorage.removeItem('connectedUserId');
+location.replace("index.html");
+}
+
+function displayAdminProducts(){
+    var productsTab=getKey("products");
+    var content='';
+    for(var i=0; i<productsTab.length; i++){
+        content=content+`
+        <tr>
+									<td>${productsTab[i].id}</td>
+									<td>${productsTab[i].nameProduct}</td>
+									<td>${productsTab[i].price}</td>
+									<td>${productsTab[i].category}</td>
+									<td>${productsTab[i].stock}</td>
+									<td>
+                                    <button class="btn btn-warning">Update</button>
+                                    <button class="btn btn-danger">delete</button>
+                                    </td>
+		</tr>
+        
+
+        `;
+    }
+    document.getElementById("adminProductsDiv").innerHTML=content;
+}
+
+function displayAdminUsers(){
+    var usersTab=getKey("users");
+
+    var content='';
+    for(var i=0; i<usersTab.length; i++){
+        content=content+`
+        <tr>
+									<td>${usersTab[i].id}</td>
+									<td>${usersTab[i].fName}</td>
+									<td>${usersTab[i].lName}</td>
+									<td>${usersTab[i].email}</td>
+									<td>${usersTab[i].tel}</td>
+                                    <td>${usersTab[i].role}</td>
+									<td>
+                                    <button class="btn btn-warning">Update</button>
+                                    <button class="btn btn-danger">delete</button>
+                                    </td>
+		</tr>
+        
+
+        `;
+    }
+    document.getElementById("adminUsersDiv").innerHTML=content;
+}
+//La même que "displayAllOrders()" quelques modification dans les variables sans afficher le Total
+function displayAdminOrders(){ 
+    var ordersTab=JSON.parse(localStorage.getItem('orders')||'[]');
+    var content='';
+    for(var i=0; i<ordersTab.length;i++){
+        content=content+`
+        <tr>
+        <td>
+          ${ordersTab[i].id}
+        </td>
+        <td>
+          ${searchObj(ordersTab[i].userId,"users").fName}
+        </td>
+        <td>
+          ${searchObj(ordersTab[i].userId,"users").email}
+        </td>
+        <td>
+           ${ordersTab[i].qty}
+        </td>
+        <td>
+          ${searchObj(ordersTab[i].productId,"products").nameProduct}
+        </td>
+        <td>
+            <button class="btn btn-warning">Update</button>
+            <button class="btn btn-danger">delete</button>
+         </td>
+       
+        
+    </tr>`;
+   
+    }
+  
+    document.getElementById("adminOrdersDiv").innerHTML=content;
+}
