@@ -15,7 +15,7 @@
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 	<!-- Site Title -->
-	<title>Karma Shop - log in</title>
+	<title>Karma Shop - store dashboard</title>
 
 	<!--
 		CSS
@@ -79,10 +79,10 @@
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
-					<h1>Login/Register</h1>
+					<h1>STORE DASHBOARD</h1>
 					<nav class="d-flex align-items-center">
 						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-						<a href="category.html">Login/Register</a>
+						<a href="category.html">Store Dashboard</a>
 					</nav>
 				</div>
 			</div>
@@ -91,40 +91,82 @@
 	<!-- End Banner Area -->
 
 	<!--================Login Box Area =================-->
-	<section class="login_box_area section_gap">
+	<section class="product_description_area">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="login_box_img">
-						<img class="img-fluid" src="img/login.jpg" alt="">
-						<div class="hover">
-							<h4>New to our website?</h4>
-							<p>There are advances being made in science and technology everyday, and a good example of this is the</p>
-							<a class="primary-btn" href="signup.html">Create an Account</a>
-						</div>
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Products</a>
+				</li>
+				
+				<li class="nav-item">
+					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+					 aria-selected="false">Orders</a>
+				</li>
+				
+		  </ul>
+			  <div class="tab-content" id="myTabContent">
+				  <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+					
+                       <div class="table-responsive">
+						 <table class="table">
+							 <thead>
+								<tr>
+									<th scope="col">Product Id</th>
+									<th scope="col">Product Name</th>
+									<th scope="col">Product Price</th>
+									<th scope="col">Product Category</th>
+									<th scope="col">Product Stock</th>
+									<th scope="col">Action</th>
+									<th></th>
+								</tr>
+							 </thead>
+							 <tbody id="storeProductsDiv" >
+								<span id="formulaireDiv"></span>
+								<script>displayStoreProducts();</script>
+								
+								
+								
+							
+							   
+							 </tbody>
+					      </table>
+				     </div>
+				 </div>
+				
+				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+					<div class="table-responsive">
+						<table class="table" >
+							<thead>
+								<tr>
+									<th scope="col">Or. Id</th>
+									<th scope="col">Product Id</th>
+									<th scope="col">Product Name</th>
+									<th scope="col">Product Price</th>
+									<th scope="col">Qty</th>
+									<th scope="col">Total</th>
+									<th scope="col"> Status</th>
+									<th scope="col">Action</th>
+									
+								</tr>
+							</thead>
+							<tbody id="storeOrdersDiv" >
+								
+								<script>displayStoreOrders();</script>
+								
+								
+								
+							
+							   
+							</tbody>
+						</table>
 					</div>
 				</div>
-				<div class="col-lg-6">
-					<div class="login_form_inner">
-						<h3>Log in to enter</h3>
-						<div class="row login_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
-							<div class="col-md-12 form-group">
-								<input type="email" class="form-control" id="email"  placeholder="email" >
-							</div>
-							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" id="password"  placeholder="Password" >
-							</div>
-						
-							<div class="col-md-12 form-group">
-								<button type="submit" value="submit" onclick="login()" class="primary-btn">Log In</button>
-							</div>
-							<span id="loginError" style="color:red"></span>
-						</div>
-					</div>
-				</div>
+				
+			   
 			</div>
 		</div>
 	</section>
+	
 	<!--================End Login Box Area =================-->
 
 	<!-- start footer Area -->

@@ -15,7 +15,7 @@
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 	<!-- Site Title -->
-	<title>Karma Shop - log in</title>
+	<title>Karma Shop - admin dashboard</title>
 
 	<!--
 		CSS
@@ -49,37 +49,8 @@
 					</button>
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-						<ul class="nav navbar-nav menu_nav ml-auto">
-							<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-							<li class="nav-item submenu dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Shop</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="category.html">Shop Category</a></li>
-									<li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a></li>
-									<li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
-									<li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
-									<li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
-								</ul>
-							</li>
-							<li class="nav-item submenu dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Blog</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-									<li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
-								</ul>
-							</li>
-							<li class="nav-item submenu dropdown active">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Pages</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item active"><a class="nav-link" href="login.html">Login</a></li>
-									<li class="nav-item"><a class="nav-link" href="tracking.html">Tracking</a></li>
-									<li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
-								</ul>
-							</li>
-							<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+						<ul class="nav navbar-nav menu_nav ml-auto" id="headerId">
+							<script>generateHeader();</script>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
@@ -108,10 +79,10 @@
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
-					<h1>ADMIN DASHBORD</h1>
+					<h1>ADMIN DASHBOARD</h1>
 					<nav class="d-flex align-items-center">
 						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-						<a href="category.html">Login/Register</a>
+						<a href="category.html">Admin Dashboard</a>
 					</nav>
 				</div>
 			</div>
@@ -153,7 +124,7 @@
 								</tr>
 							 </thead>
 							 <tbody id="adminProductsDiv" >
-								
+								<span id="formulaireDiv"></span>
 								<script>displayAdminProducts();</script>
 								
 								
@@ -174,7 +145,7 @@
 								<th scope="col">Email </th>
 								<th scope="col">Telephone</th>
 								<th scope="col">Role</th>
-								<th>Action</th>
+								<th scope="col">Action</th>
 							</tr>
 						</thead>
 						<tbody id="adminUsersDiv" >
@@ -193,11 +164,12 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th scope="col">Order Id</th>
+									<th scope="col">Or. Id</th>
 									<th scope="col">User Name</th>
 									<th scope="col">User Email</th>
 									<th scope="col">Quantity</th>
 									<th scope="col">Product Name</th>
+									<th scope="col">Store Name</th>
 									<th scope="col">Action</th>
 								</tr>
 							</thead>
